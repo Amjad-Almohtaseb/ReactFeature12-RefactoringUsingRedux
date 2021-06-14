@@ -12,7 +12,7 @@ const ProductDetail = () => {
   const { productSlug } = useParams();
   const product = products.find((product) => product.slug === productSlug);
 
-  if (!product) return <Redirect to="/products" />;
+  if (!product) return <Redirect to="/" />;
 
   return (
     <DetailWrapper>

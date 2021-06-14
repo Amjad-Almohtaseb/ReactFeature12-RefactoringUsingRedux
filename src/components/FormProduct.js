@@ -1,16 +1,27 @@
-import { add } from "lodash";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../store/actions";
+import { addProduct, updateProduct } from "../store/actions";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 
 const FormProduct = () => {
-  const [product, setProduct] = useState({
-    name: "",
-    price: 0,
-    description: "",
-    image: "",
-  });
+  const productSlug = useParams().productSlug;
+  const products = useSelector((state) => state.products);
+  const updatedProducts = products.find(
+    (product) => product.slug === productSlug
+  );
+
+  const [product, setProduct] = useState(
+    updatedProducts
+      ? updatedProducts
+      : {
+          name: "",
+          price: 0,
+          description: "",
+          image: "",
+        }
+  );
   const dispatch = useDispatch();
   const history = useHistory();
   const resetForm = () => {
@@ -23,7 +34,8 @@ const FormProduct = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addProduct(product));
+    if (updatedProducts) dispatch(updateProduct(product));
+    else dispatch(addProduct(product));
     history.push("/products");
     resetForm();
   };
@@ -39,7 +51,7 @@ const FormProduct = () => {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="Enter the name of product"
+          placeholder="Name of product"
           onChange={handleChange}
           name="name"
           value={product.name}
@@ -51,7 +63,7 @@ const FormProduct = () => {
           type="number"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="Enter the price of product"
+          placeholder="Price of product"
           onChange={handleChange}
           name="price"
           value={product.price}
@@ -64,7 +76,7 @@ const FormProduct = () => {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="Enter the description of product"
+          placeholder="Description of product"
           onChange={handleChange}
           name="description"
           value={product.description}
@@ -76,14 +88,14 @@ const FormProduct = () => {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="Enter the URL of picture"
+          placeholder="Image of product"
           onChange={handleChange}
           name="image"
           value={product.image}
         />
       </div>
       <button type="submit" className="btn btn-dark">
-        Submit
+        {updatedProducts ? "Update" : "Submit"}
       </button>
     </form>
   );

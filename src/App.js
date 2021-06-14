@@ -46,6 +46,9 @@ function App() {
       <GlobalStyle />
       <NavBar currentTheme={currentTheme} toggleTheme={toggleTheme} />
       <Switch>
+        <Route path="/products/:productSlug/edit">
+          <FormProduct />
+        </Route>
         <Route path="/products/FormProduct">
           <FormProduct />
         </Route>
