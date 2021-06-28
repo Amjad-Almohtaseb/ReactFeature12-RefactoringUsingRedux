@@ -19,13 +19,13 @@ export const deleteProduct = (productId) => {
   };
 };
 
-export const addProduct = (product) => {
+export const addProduct = (newProduct) => {
   return async (dispatch) => {
     try {
-      const formData = new FormData();
-      for (const key in product) formData.append(key, product[key]);
-
-      const res = await axios.post("http://localhost:8000/products", formData);
+      const res = await axios.post(
+        "http://localhost:8000/products",
+        newProduct
+      ); //send formData in the requestزي اللي كنا نبعتها في البودي
 
       dispatch({
         type: ADD_PRODUCT,
@@ -42,17 +42,14 @@ export const addProduct = (product) => {
 export const updateProduct = (updatedProduct) => {
   return async (dispatch) => {
     try {
-      const formData = new FormData();
-      for (const key in updatedProduct)
-        formData.append(key, updatedProduct[key]);
-      await axios.put(
+      const res = await axios.put(
         `http://localhost:8000/products/${updatedProduct.id}`,
-        formData
+        updatedProduct
       );
       dispatch({
         type: "UPDATE_PRODUCT",
         payload: {
-          updatedProduct: updateProduct,
+          updatedProduct: res.data,
         },
       });
     } catch (error) {
