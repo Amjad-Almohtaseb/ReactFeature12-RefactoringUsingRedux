@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProduct, updateProduct } from "../store/actions";
+import { addProduct, updateProduct } from "../store/actions/productActions";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
 const FormProduct = () => {
+  const shopId = useParams().shopId;
   const productSlug = useParams().productSlug;
-  const products = useSelector((state) => state.products);
+  const products = useSelector((state) => state.products.products);
   const updatedProducts = products.find(
     (product) => product.slug === productSlug
   );
@@ -35,12 +36,15 @@ const FormProduct = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (updatedProducts) dispatch(updateProduct(product));
-    else dispatch(addProduct(product));
+    else dispatch(addProduct(product, shopId));
     history.push("/products");
     resetForm();
   };
   const handleChange = (event) => {
     setProduct({ ...product, [event.target.name]: event.target.value });
+  };
+  const handleImage = (event) => {
+    setProduct({ ...product, image: event.target.files[0] });
   };
 
   return (
@@ -85,13 +89,13 @@ const FormProduct = () => {
       <div className="form-group">
         <label for="exampleFormControlInput1">Image of product</label>
         <input
-          type="text"
+          type="file"
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="Image of product"
-          onChange={handleChange}
+          onChange={handleImage}
           name="image"
-          value={product.image}
+          // value={product.image}
         />
       </div>
       <button type="submit" className="btn btn-dark">

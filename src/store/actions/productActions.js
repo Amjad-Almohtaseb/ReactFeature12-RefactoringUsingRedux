@@ -1,14 +1,17 @@
 import axios from "axios";
-export const ADD_PRODUCT = "ADD_PRODUCT";
-export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
-export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
+import {
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  FETCH_PRODUCTS,
+  UPDATE_PRODUCT,
+} from "./types";
 
 export const deleteProduct = (productId) => {
   return async (dispatch) => {
     try {
       await axios.delete(`http://localhost:8000/products/${productId}`);
       dispatch({
-        type: "DELETE_PRODUCT",
+        type: DELETE_PRODUCT,
         payload: {
           productId: productId,
         },
@@ -22,10 +25,9 @@ export const deleteProduct = (productId) => {
 export const addProduct = (newProduct) => {
   return async (dispatch) => {
     try {
-      const res = await axios.post(
-        "http://localhost:8000/products",
-        newProduct
-      ); //send formData in the requestزي اللي كنا نبعتها في البودي
+      const formData = new FormData();
+      for (const key in newProduct) formData.append(key, newProduct[key]);
+      const res = await axios.post("http://localhost:8000/products", formData); //send formData in the requestزي اللي كنا نبعتها في البودي
 
       dispatch({
         type: ADD_PRODUCT,
@@ -42,12 +44,18 @@ export const addProduct = (newProduct) => {
 export const updateProduct = (updatedProduct) => {
   return async (dispatch) => {
     try {
+      const formData = new FormData();
+      //formData.append(name,updatedProduct.name)
+      //formData.append(img,updatedProduct.img)
+      //وهكزا
+      for (const key in updatedProduct)
+        formData.append(key, updatedProduct[key]); //key,value
       const res = await axios.put(
         `http://localhost:8000/products/${updatedProduct.id}`,
-        updatedProduct
+        formData
       );
       dispatch({
-        type: "UPDATE_PRODUCT",
+        type: UPDATE_PRODUCT,
         payload: {
           updatedProduct: res.data,
         },

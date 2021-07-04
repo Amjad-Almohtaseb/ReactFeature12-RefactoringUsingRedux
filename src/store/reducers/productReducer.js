@@ -1,4 +1,10 @@
-import { ADD_PRODUCT, UPDATE_PRODUCT, FETCH_PRODUCTS } from "./actions";
+import {
+  ADD_PRODUCT,
+  UPDATE_PRODUCT,
+  FETCH_PRODUCTS,
+  DELETE_PRODUCT,
+} from "../actions/types";
+/*  {products:[{},{}],counter}*/
 
 const initialState = {
   products: [],
@@ -6,7 +12,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "DELETE_PRODUCT":
+    case DELETE_PRODUCT:
       const productToKeep = state.products.filter(
         (product) => product.id !== action.payload.productId
       );
@@ -26,7 +32,7 @@ const reducer = (state = initialState, action) => {
     case UPDATE_PRODUCT:
       const { updatedProduct } = action.payload;
       return {
-        ...state,
+        ...state, //products:[value]
         products: state.products.map((product) =>
           product.id === updatedProduct.id ? updatedProduct : product
         ),

@@ -7,10 +7,10 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const ProductList = () => {
-  const products = useSelector((state) => state.products);
-
+const ProductList = (props) => {
   const [query, setQuery] = useState("");
+
+  const products = props.products;
 
   const productList = products
     .filter((product) =>
@@ -21,11 +21,7 @@ const ProductList = () => {
   return (
     <div>
       <SearchBar setQuery={setQuery} />
-      <Link to="/products/FormProduct">
-        <button type="button" class="btn btn-secondary">
-          Add a Product
-        </button>
-      </Link>
+
       <ListWrapper>{productList}</ListWrapper>
     </div>
   );
