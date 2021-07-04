@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   products: [],
+  loading: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,6 +42,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+        loading: false,
       };
 
     default:

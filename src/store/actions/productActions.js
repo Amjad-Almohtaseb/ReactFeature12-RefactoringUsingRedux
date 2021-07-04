@@ -22,12 +22,15 @@ export const deleteProduct = (productId) => {
   };
 };
 
-export const addProduct = (newProduct) => {
+export const addProduct = (newProduct, shopId) => {
   return async (dispatch) => {
     try {
       const formData = new FormData();
       for (const key in newProduct) formData.append(key, newProduct[key]);
-      const res = await axios.post("http://localhost:8000/products", formData); //send formData in the requestزي اللي كنا نبعتها في البودي
+      const res = await axios.post(
+        `http://localhost:8000/shops/${shopId}/products`,
+        formData
+      ); //send formData in the requestزي اللي كنا نبعتها في البودي
 
       dispatch({
         type: ADD_PRODUCT,

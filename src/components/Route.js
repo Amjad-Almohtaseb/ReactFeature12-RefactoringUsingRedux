@@ -4,6 +4,8 @@ import FormProduct from "./FormProduct";
 import ShopList from "./ShopList";
 import ProductDetail from "./ProductDetail";
 import ProductList from "./ProductList";
+import Signup from "./Signup";
+
 import Home from "./Home";
 import { useSelector } from "react-redux";
 
@@ -25,6 +27,9 @@ const Routes = () => {
       </Route>
       <Route path={"/shops/:shopSlug"}>
         <ShopDetail />
+      </Route>
+      <Route path="/signup">
+        <Signup />
       </Route>
       <Route path="/shops">
         <ShopList />
