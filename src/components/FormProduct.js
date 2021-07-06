@@ -37,6 +37,7 @@ const FormProduct = () => {
     event.preventDefault();
     if (updatedProducts) dispatch(updateProduct(product));
     else dispatch(addProduct(product, shopId));
+    //history like redirect
     history.push("/products");
     resetForm();
   };
@@ -50,11 +51,11 @@ const FormProduct = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label for="exampleFormControlInput1">Name of product</label>
+        {/* <label for="exampleFormControlInput1">Name of product</label> */}
         <input
           type="text"
           className="form-control"
-          id="exampleFormControlInput1"
+          // id="exampleFormControlInput1"
           placeholder="Name of product"
           onChange={handleChange}
           name="name"
@@ -62,11 +63,11 @@ const FormProduct = () => {
         />
       </div>
       <div className="form-group">
-        <label for="exampleFormControlInput1">Price of product</label>
+        {/* <label for="exampleFormControlInput1">Price of product</label> */}
         <input
           type="number"
           className="form-control"
-          id="exampleFormControlInput1"
+          // id="exampleFormControlInput1"
           placeholder="Price of product"
           onChange={handleChange}
           name="price"
@@ -75,11 +76,11 @@ const FormProduct = () => {
       </div>
 
       <div className="form-group">
-        <label for="exampleFormControlInput1">Description of product</label>
+        {/* <label for="exampleFormControlInput1">Description of product</label> */}
         <input
           type="text"
           className="form-control"
-          id="exampleFormControlInput1"
+          // id="exampleFormControlInput1"
           placeholder="Description of product"
           onChange={handleChange}
           name="description"

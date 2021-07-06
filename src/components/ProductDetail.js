@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const ProductDetail = () => {
   const products = useSelector((state) => state.products.products);
 
-  const { productSlug } = useParams();
+  const { productSlug } = useParams(); //bring me productSlug from url and it name is from route.
   const product = products.find((product) => product.slug === productSlug);
 
   if (!product) return <Redirect to="/" />;

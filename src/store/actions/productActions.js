@@ -1,15 +1,15 @@
-import axios from "axios";
 import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   FETCH_PRODUCTS,
   UPDATE_PRODUCT,
 } from "./types";
+import instance from "./instance";
 
 export const deleteProduct = (productId) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`http://localhost:8000/products/${productId}`);
+      await instance.delete(`/products/${productId}`);
       dispatch({
         type: DELETE_PRODUCT,
         payload: {
@@ -27,10 +27,7 @@ export const addProduct = (newProduct, shopId) => {
     try {
       const formData = new FormData();
       for (const key in newProduct) formData.append(key, newProduct[key]);
-      const res = await axios.post(
-        `http://localhost:8000/shops/${shopId}/products`,
-        formData
-      ); //send formData in the requestزي اللي كنا نبعتها في البودي
+      const res = await instance.post(`/shops/${shopId}/products`, formData); //send formData in the requestزي اللي كنا نبعتها في البودي
 
       dispatch({
         type: ADD_PRODUCT,
@@ -53,8 +50,8 @@ export const updateProduct = (updatedProduct) => {
       //وهكزا
       for (const key in updatedProduct)
         formData.append(key, updatedProduct[key]); //key,value
-      const res = await axios.put(
-        `http://localhost:8000/products/${updatedProduct.id}`,
+      const res = await instance.put(
+        `/products/${updatedProduct.id}`,
         formData
       );
       dispatch({
@@ -72,7 +69,7 @@ export const updateProduct = (updatedProduct) => {
 export const fetchProducts = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get("http://localhost:8000/products");
+      const res = await instance.get("/products");
       console.log(res.data);
       dispatch({
         type: FETCH_PRODUCTS,

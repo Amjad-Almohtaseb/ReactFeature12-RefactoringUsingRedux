@@ -1,9 +1,10 @@
 import { ADD_SHOPS, FETCH_SHOPS } from "./types";
-import axios from "axios";
+
+import instance from "./instance";
 export const fetchShops = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get("http://localhost:8000/shops");
+      const res = await instance.get("/shops");
       console.log(res.data);
       dispatch({
         type: FETCH_SHOPS,
@@ -21,7 +22,7 @@ export const addShop = (shop) => {
       const formData = new FormData();
       for (const key in shop) formData.append(key, shop[key]);
 
-      const res = await axios.post("http://localhost:8000/shops", formData);
+      const res = await instance.post("/shops", formData);
 
       dispatch({
         type: ADD_SHOPS,
