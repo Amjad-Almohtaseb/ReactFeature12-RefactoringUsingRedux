@@ -34,6 +34,9 @@ const FormProduct = () => {
     });
   };
   const handleSubmit = (event) => {
+    // submit button by default refresh the page and change the url when you click on it
+    //so the data inside form will removed automatically after you click the button
+    // and to prevent this we use event.preventDefault()
     event.preventDefault();
     if (updatedProducts) dispatch(updateProduct(product));
     else dispatch(addProduct(product, shopId));
@@ -57,8 +60,10 @@ const FormProduct = () => {
           className="form-control"
           // id="exampleFormControlInput1"
           placeholder="Name of product"
-          onChange={handleChange}
+          //event will sent auto in the first formate
+          onChange={handleChange} //or{(event)=>handleChange(event)}
           name="name"
+          //bind our input to our state
           value={product.name}
         />
       </div>
